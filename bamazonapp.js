@@ -48,11 +48,26 @@ function purchasePrompt() {
             message: "How many items do you wish to purchase?",
             filter: Number
         },
-
     ]).then(function (answers) {
         var quantityNeeded = answers.Quantity;
         var IDrequested = answers.ID;
-        //purchaseOrder(IDrequested, quantityNeeded);
-        console.log(quantityNeeded + IDrequested);
+        purchaseOrder(IDrequested, quantityNeeded);
+    })
+};
+
+function purchaseOrder(IDrequested, quantityNeeded) {
+    
+    connection.query("SELECT * FROM products WHERE item_id=?", {item_id:IDrequested}, function (err, res) {
+        if (err) { console.log(err) };
+        if (quantityNeeded < res[0].stock_quantity) {
+            var totalCost = res[0].price * quantityNeeded;
+            console.log("Good news, your item is in stock!");
+            console.log("Your total cost for " + quantityNeeded + " " + res[0].product_name + " is " + totalCost + ". Thank you!");
+
+            connection.query("UPDATE products SET stock_quantity = (stock_quantity - ? WHERE item_id=?", {stock_quantity:quantityNeeded,item_id:IDrequested});
+        } else {
+            console.log("Insufficient quantity: Sorry we do not have enough " + res[0].product_name + "to complete your order.");
+        };
+        displayProducts();
     });
 };
