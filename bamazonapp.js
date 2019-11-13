@@ -30,8 +30,27 @@ function displayProducts() {
             );
         }
         console.log(displayTable.toString());
-        purchasePrompt();
+        shopprompt();
     });
+}
+
+function shopprompt(){
+    inquirer.prompt([
+        {
+            name: "buy",
+            type: "confirm",
+            message: "Would you like to shop today?"
+        }
+    ]).then(function(answers){
+        switch(answers.buy){
+            case true:
+                purchasePrompt();
+                break;
+            case false:
+                endsession();
+                break;
+        }
+    })
 }
 
 function purchasePrompt() {
@@ -80,3 +99,8 @@ function purchaseOrder(ID, quantity) {
         displayProducts();
     });
 };
+
+function endsession() {
+    console.log("Thank you, have a nice day!");
+    connection.end();
+}
