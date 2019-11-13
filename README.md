@@ -26,7 +26,9 @@ To use the app, simply clone the github repository to your computer. In bash/com
 
 ![Capture4](/images/SS4.jpg)
 
-![Capture5](/images/SS5.jpg)
+![Capture5](/images/SS6.jpg)
+
+![Capture6](/images/SS5.jpg)
 
 
 ## Technologies Used: 
